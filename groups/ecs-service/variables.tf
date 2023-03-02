@@ -38,32 +38,6 @@ variable "docker_registry" {
   description = "The FQDN of the Docker registry."
 }
 
-# Certificates
-variable "ssl_certificate_id" {
-  type        = string
-  description = "The ARN of the certificate for https access through the ALB."
-}
-
-# DNS
-variable "zone_id" {
-  default = "" # default of empty string is used as conditional when creating route53 records i.e. if no zone_id provided then no route53
-  type        = string
-  description = "The ID of the hosted zone to contain the Route 53 record."
-}
-variable "external_top_level_domain" {
-  type        = string
-  description = "The type levelel of the DNS domain for external access."
-}
-variable "internal_top_level_domain" {
-  type        = string
-  description = "The type levelel of the DNS domain for internal access."
-}
-variable "account_subdomain_prefix" {
-  type = string
-  description = "The first part of the account/identity service subdomain - either \"account\" or \"identity\""
-  default = "account"
-}
-
 # ------------------------------------------------------------------------------
 # Service configs
 # ------------------------------------------------------------------------------

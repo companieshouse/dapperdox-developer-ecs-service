@@ -13,26 +13,9 @@ variable "vpc_id" {
   type        = string
   description = "The ID of the VPC for the target group and security group."
 }
-variable "dev-specs-lb-arn" {
-  type        = string
-  description = "The ARN of the load balancer created in the ecs-stack module."
-}
-variable "dev-specs-lb-listener-arn" {
+variable "dev_specs_lb_listener_arn" {
   type        = string
   description = "The ARN of the lb listener created in the ecs-stack module."
-}
-
-# DNS
-variable "external_top_level_domain" {
-  type        = string
-  description = "The type levelel of the DNS domain for external access."
-}
-variable "internal_top_level_domain" {
-  type        = string
-  description = "The type levelel of the DNS domain for internal access."
-}
-variable "account_subdomain_prefix" {
-  type = string
 }
 
 # ECS Service
@@ -53,12 +36,6 @@ variable "docker_registry" {
 variable "task_execution_role_arn" {
   type        = string
   description = "The ARN of the task execution role that the container can assume."
-}
-
-# Certificates
-variable "ssl_certificate_id" {
-  type        = string
-  description = "The ARN of the certificate for https access through the ALB."
 }
 
 # Secrets

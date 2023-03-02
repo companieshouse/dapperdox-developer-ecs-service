@@ -22,8 +22,6 @@ locals {
       environment                : var.environment
       name_prefix                : var.name_prefix
       aws_region                 : var.aws_region
-      external_top_level_domain  : var.external_top_level_domain
-      account_subdomain_prefix   : var.account_subdomain_prefix
       docker_registry            : var.docker_registry
 
       # dapperdox developer specific configs
@@ -64,7 +62,7 @@ resource "aws_lb_target_group" "dapperdox-developer-target_group" {
 }
 
 resource "aws_lb_listener_rule" "dapperdox-developer" {
-  listener_arn = var.dev-specs-lb-listener-arn
+  listener_arn = var.dev_specs_lb_listener_arn
   priority     = 1
   action {
     type             = "forward"

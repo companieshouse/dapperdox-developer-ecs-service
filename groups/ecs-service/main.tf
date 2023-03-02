@@ -52,7 +52,7 @@ data "aws_ssm_parameter" "secret" {
 # create a map of secret name => secret arn to pass into ecs service module
 # using the trimprefix function to remove the prefixed path from the secret name
 locals{
-  secrets_arns = {
+  secrets_arn_map = {
       for sec in data.aws_ssm_parameter.secret:
         trimprefix(sec.name, "/${local.name_prefix}/") => sec.arn
     }
@@ -66,23 +66,24 @@ data "aws_lb_listener" "dev-specs-lb-listener" {
   port = 443
 }
 
+locals{
+  dev_specs_lb_listener_arn = data.aws_lb_listener.dev-specs-lb-listener.arn
+  ecs_cluster_id            = data.aws_ecs_cluster.ecs-cluster.id
+  task_execution_role_arn   = data.aws_iam_role.ecs-cluster-iam-role.arn
+}
+
 module "ecs-services" {
   source = "./module-ecs-services"
 
   name_prefix               = local.name_prefix
   environment               = var.environment
-  dev-specs-lb-arn          = data.aws_lb.dev-specs-lb.arn
-  dev-specs-lb-listener-arn = data.aws_lb_listener.dev-specs-lb-listener.arn
+  dev_specs_lb_listener_arn = local.dev_specs_lb_listener_arn
   vpc_id                    = local.vpc_id
   aws_region                = var.aws_region
-  ssl_certificate_id        = var.ssl_certificate_id
-  external_top_level_domain = var.external_top_level_domain
-  internal_top_level_domain = var.internal_top_level_domain
-  account_subdomain_prefix  = var.account_subdomain_prefix
-  ecs_cluster_id            = data.aws_ecs_cluster.ecs-cluster.id
-  task_execution_role_arn   = data.aws_iam_role.ecs-cluster-iam-role.arn
+  ecs_cluster_id            = local.ecs_cluster_id
+  task_execution_role_arn   = local.task_execution_role_arn
   docker_registry           = var.docker_registry
-  secrets_arn_map           = local.secrets_arns
+  secrets_arn_map           = local.secrets_arn_map
 
   # dapperdox.developer.ch.gov.uk variables
   dapperdox_developer_version     = var.dapperdox_developer_version
