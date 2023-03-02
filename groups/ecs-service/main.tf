@@ -71,24 +71,3 @@ locals{
   ecs_cluster_id            = data.aws_ecs_cluster.ecs-cluster.id
   task_execution_role_arn   = data.aws_iam_role.ecs-cluster-iam-role.arn
 }
-
-module "ecs-services" {
-  source = "./module-ecs-services"
-
-  name_prefix               = local.name_prefix
-  environment               = var.environment
-  dev_specs_lb_listener_arn = local.dev_specs_lb_listener_arn
-  vpc_id                    = local.vpc_id
-  aws_region                = var.aws_region
-  ecs_cluster_id            = local.ecs_cluster_id
-  task_execution_role_arn   = local.task_execution_role_arn
-  docker_registry           = var.docker_registry
-  secrets_arn_map           = local.secrets_arn_map
-
-  # dapperdox.developer.ch.gov.uk variables
-  dapperdox_developer_version     = var.dapperdox_developer_version
-  log_level                       = var.log_level
-  include_api_filing_public_specs = var.include_api_filing_public_specs
-  include_pending_public_specs    = var.include_pending_public_specs
-  include_private_specs           = var.include_private_specs
-}
