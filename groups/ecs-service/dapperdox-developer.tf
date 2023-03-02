@@ -1,8 +1,3 @@
-locals {
-  service_name             = "dapperdox-developer"
-  dapperdox_developer_port = "10000"
-}
-
 resource "aws_ecs_service" "dapperdox-developer-ecs-service" {
   name            = "${var.environment}-${local.service_name}"
   cluster         = local.ecs_cluster_id
@@ -15,32 +10,28 @@ resource "aws_ecs_service" "dapperdox-developer-ecs-service" {
   }
 }
 
-locals {
-  definition = merge(
-    {
-      service_name               : local.service_name
-      environment                : var.environment
-      name_prefix                : local.name_prefix
-      aws_region                 : var.aws_region
-      docker_registry            : var.docker_registry
-
-      # dapperdox developer specific configs
-      dapperdox_developer_port        : local.dapperdox_developer_port
-      dapperdox_developer_version     : var.dapperdox_developer_version
-      log_level                       : var.log_level
-      include_api_filing_public_specs : var.include_api_filing_public_specs
-      include_pending_public_specs    : var.include_pending_public_specs
-      include_private_specs           : var.include_private_specs
-    },
-      local.secrets_arn_map
-  )
-}
-
 resource "aws_ecs_task_definition" "dapperdox-developer-task-definition" {
   family                = "${var.environment}-${local.service_name}"
   execution_role_arn    = local.task_execution_role_arn
   container_definitions = templatefile(
-    "${path.module}/${local.service_name}-task-definition.tmpl", local.definition
+    "${path.module}/${local.service_name}-task-definition.tmpl",
+    merge( # pass in a map of variables required for the service's container definitions template merged with the secrets arn map
+      {
+        service_name               : local.service_name
+        name_prefix                : local.name_prefix
+        aws_region                 : var.aws_region
+        docker_registry            : var.docker_registry
+
+        # dapperdox developer specific configs
+        dapperdox_developer_port        : local.dapperdox_developer_port
+        dapperdox_developer_version     : var.dapperdox_developer_version
+        log_level                       : var.log_level
+        include_api_filing_public_specs : var.include_api_filing_public_specs
+        include_pending_public_specs    : var.include_pending_public_specs
+        include_private_specs           : var.include_private_specs
+      },
+        local.secrets_arn_map
+    )
   )
 }
 
