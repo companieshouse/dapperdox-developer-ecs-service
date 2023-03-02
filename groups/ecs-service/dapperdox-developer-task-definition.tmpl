@@ -9,8 +9,8 @@
         ],
         "name": "${service_name}",
         "image": "${docker_registry}/local/dapperdox.developer.ch.gov.uk:${dapperdox_developer_version}",
-        "cpu": 1,
-        "memory": 512,
+        "cpu": ${required_cpus},
+        "memory": ${required_memory},
         "mountPoints": [],
         "portMappings": [{
             "containerPort": ${dapperdox_developer_port},

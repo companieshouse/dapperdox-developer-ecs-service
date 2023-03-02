@@ -2,7 +2,7 @@ resource "aws_ecs_service" "dapperdox-developer-ecs-service" {
   name            = "${var.environment}-${local.service_name}"
   cluster         = local.ecs_cluster_id
   task_definition = aws_ecs_task_definition.dapperdox-developer-task-definition.arn
-  desired_count   = 1
+  desired_count   = var.desired_task_count
   load_balancer {
     target_group_arn = aws_lb_target_group.dapperdox-developer-target_group.arn
     container_port   = local.dapperdox_developer_port
@@ -21,6 +21,8 @@ resource "aws_ecs_task_definition" "dapperdox-developer-task-definition" {
         name_prefix                : local.name_prefix
         aws_region                 : var.aws_region
         docker_registry            : var.docker_registry
+        required_cpus              : var.required_cpus
+        required_memory            : var.required_memory
 
         # dapperdox developer specific configs
         dapperdox_developer_port        : local.dapperdox_developer_port

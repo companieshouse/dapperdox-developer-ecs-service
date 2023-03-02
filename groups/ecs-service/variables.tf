@@ -39,7 +39,27 @@ variable "docker_registry" {
 }
 
 # ------------------------------------------------------------------------------
-# Service configs
+# Service performance and scaling configs
+# ------------------------------------------------------------------------------
+
+variable "desired_task_count" {
+  type = number
+  description = "The desired ECS task count for this service"
+  default = 1
+}
+variable "required_cpus" {
+  type = number
+  description = "The required cpu count for this service"
+  default = 1
+}
+variable "required_memory" {
+  type = number
+  description = "The required memory for this service"
+  default = 512
+}
+
+# ------------------------------------------------------------------------------
+# Service environment variable configs
 # ------------------------------------------------------------------------------
 
 variable "log_level" {
