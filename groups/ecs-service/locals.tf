@@ -4,7 +4,7 @@ locals {
   name_prefix               = "${local.stack_name}-${var.environment}"
   service_name              = "dapperdox-developer"
   container_port            = "10000"
-  docker_repo               = "local/dapperdox.developer.ch.gov.uk" # using local repo here until prod ready repo and contaner image is created
+  docker_repo               = var.docker_repo != "" ? var.docker_repo : "local/dapperdox.developer.ch.gov.uk" # using local repo here until prod ready repo and contaner image is created
   lb_listener_rule_priority = 100
   lb_listener_paths         = ["/*"]
 
