@@ -1,0 +1,12 @@
+aws_bucket = "live-eu-west-2.terraform-state.ch.gov.uk"
+remote_state_bucket = "ch-service-live-terraform-state"
+environment = "live"
+deploy_to = "live"
+state_prefix = "env:/live"
+aws_profile = "live-eu-west-2"
+
+# service configs
+log_level = "trace"
+include_api_filing_public_specs = "1"
+include_pending_public_specs = "0"
+include_private_specs = "0"

@@ -1,0 +1,12 @@
+aws_bucket = "staging-eu-west-2.terraform-state.ch.gov.uk"
+remote_state_bucket = "ch-service-staging-terraform-state"
+environment = "staging"
+deploy_to = "staging"
+state_prefix = "env:/staging"
+aws_profile = "staging-eu-west-2"
+
+# service configs
+log_level = "trace"
+include_api_filing_public_specs = "1"
+include_pending_public_specs = "1"
+include_private_specs = "1"
