@@ -5,7 +5,7 @@ locals {
   service_name              = "dapperdox-developer"
   container_port            = "10000"
   docker_repo               = "dapperdox.developer.ch.gov.uk"
-  lb_listener_rule_priority = 100
+  lb_listener_rule_priority = 10
   lb_listener_paths         = ["/*"]
   vpc_name                  = data.aws_ssm_parameter.secret[format("/%s/%s", local.name_prefix, "vpc-name")].value
 
