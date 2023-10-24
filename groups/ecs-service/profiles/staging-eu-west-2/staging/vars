@@ -10,3 +10,8 @@ log_level = "trace"
 include_api_filing_public_specs = "1"
 include_pending_public_specs = "1"
 include_private_specs = "1"
+
+# Scheduled scaling of tasks
+service_autoscale_enabled  = true
+service_scaledown_schedule = "55 19 * * ? *"
+service_scaleup_schedule   = "5 6 * * ? *"
