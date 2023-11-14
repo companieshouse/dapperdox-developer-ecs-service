@@ -8,7 +8,12 @@ locals {
   lb_listener_rule_priority = 10
   lb_listener_paths         = ["/*"]
   vpc_name                  = data.aws_ssm_parameter.secret[format("/%s/%s", local.name_prefix, "vpc-name")].value
-
+  default_tags = {
+    project             = ""
+    owner               = ""
+    service             = local.service_name
+    stack               = local.stack_name
+  }
 
   # create a map of secret name => secret arn to pass into ecs service module
   # using the trimprefix function to remove the prefixed path from the secret name

@@ -1,6 +1,10 @@
 provider "aws" {
   region = var.aws_region
+  default_tags {
+    tags = local.default_tags
+  }
 }
+
 
 terraform {
   backend "s3" {
@@ -30,10 +34,10 @@ module "ecs-service" {
   task_execution_role_arn = data.aws_iam_role.ecs-cluster-iam-role.arn
 
   # Load balancer configuration
-  lb_listener_arn                 = data.aws_lb_listener.dev-specs-lb-listener.arn
-  lb_listener_rule_priority       = local.lb_listener_rule_priority
-  lb_listener_paths               = local.lb_listener_paths
-  healthcheck_path                = "/"
+  lb_listener_arn           = data.aws_lb_listener.dev-specs-lb-listener.arn
+  lb_listener_rule_priority = local.lb_listener_rule_priority
+  lb_listener_paths         = local.lb_listener_paths
+  healthcheck_path          = "/"
 
   # Docker container details
   docker_registry   = var.docker_registry
