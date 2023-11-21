@@ -6,7 +6,7 @@ state_prefix = "env:/development"
 aws_profile = "development-eu-west-2"
 
 # service configs
-log_level = "trace"
+log_level = "info"
 include_api_filing_public_specs = "1"
 include_pending_public_specs = "1"
 include_private_specs = "1"
